@@ -44,11 +44,6 @@ System.register(['aurelia-framework', 'aurelia-templating', 'spoonx/aurelia-orm'
           },
           enumerable: true
         }, {
-          key: 'repository',
-          decorators: [bindable],
-          initializer: null,
-          enumerable: true
-        }, {
           key: 'pagechange',
           decorators: [bindable],
           initializer: function initializer() {
@@ -63,7 +58,7 @@ System.register(['aurelia-framework', 'aurelia-templating', 'spoonx/aurelia-orm'
           }
         }], null, _instanceInitializers);
 
-        function Pagination(entityManager) {
+        function Pagination(entityManager, element) {
           _classCallCheck(this, _Pagination);
 
           _defineDecoratedPropertyDescriptor(this, 'page', _instanceInitializers);
@@ -72,18 +67,21 @@ System.register(['aurelia-framework', 'aurelia-templating', 'spoonx/aurelia-orm'
 
           _defineDecoratedPropertyDescriptor(this, 'count', _instanceInitializers);
 
-          _defineDecoratedPropertyDescriptor(this, 'repository', _instanceInitializers);
-
           _defineDecoratedPropertyDescriptor(this, 'pagechange', _instanceInitializers);
 
           this.entityManager = entityManager;
+          this.element = element;
         }
 
         _createDecoratedClass(Pagination, [{
           key: 'attached',
           value: function attached() {
+            this.resource = this.element.getAttribute('resource');
+            if (!this.resource) {
+              return;
+            }
+            this.repository = this.entityManager.getRepository(this.resource);
             this.updateRecordCount();
-            console.log(this.page, this.limit, typeof this.pageChange);
           }
         }, {
           key: 'loadPrevious',
@@ -98,6 +96,8 @@ System.register(['aurelia-framework', 'aurelia-templating', 'spoonx/aurelia-orm'
         }, {
           key: 'load',
           value: function load(page) {
+            var _this = this;
+
             if (page === 0) {
               return;
             }
@@ -109,20 +109,25 @@ System.register(['aurelia-framework', 'aurelia-templating', 'spoonx/aurelia-orm'
             }
 
             if (typeof this.pagechange === 'function') {
-              this.pagechange({ page: page });
+              this.pagechange({ page: page }).then(function () {
+                _this.page = page;
+              });
+            } else {
+              this.page = page;
             }
-            this.page = page;
           }
         }, {
           key: 'updateRecordCount',
           value: function updateRecordCount() {
-            var _this = this;
+            var _this2 = this;
 
-            this.entityManager.getRepository(this.repository).count().then(function (response) {
-              return _this.count = response.count;
-            })['catch'](function (response) {
-              return console.error(response);
-            });
+            if (this.repository) {
+              this.repository.count().then(function (response) {
+                return _this2.count = response.count;
+              })['catch'](function (error) {
+                throw new Error('Error updating count : ' + error);
+              });
+            }
           }
         }], null, _instanceInitializers);
 
