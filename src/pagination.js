@@ -2,7 +2,7 @@ import {bindable, inject, computedFrom} from 'aurelia-framework';
 import {customElement} from 'aurelia-templating';
 import {EntityManager} from 'spoonx/aurelia-orm';
 
-@inject(EntityManager, Element)
+@inject(EntityManager)
 @customElement('pagination')
 export class Pagination {
   @bindable page;
@@ -11,7 +11,7 @@ export class Pagination {
 
   @bindable count = 0;
 
-  @bindable repository;
+  @bindable resource = null;
 
   @bindable pagechange = null;
 
@@ -25,8 +25,10 @@ export class Pagination {
   }
 
   attached () {
+    if (this.resource) {
+      this.repository = this.entityManager.getRepository(this.resource);
+    }
     this.updateRecordCount();
-    console.log(this.page, this.limit, typeof this.pageChange);
   }
 
   loadPrevious () {
@@ -49,16 +51,27 @@ export class Pagination {
     }
 
     if (typeof this.pagechange === 'function') {
-      this.pagechange({page:page});
+      this.pagechange({page:page})
+        .then(result => {
+          this.page = page;
+        })
+        .catch(error => {
+          console.error("Something went wrong.", error);
+        });
     }
-    this.page = page;
+    else {
+      this.page = page;
+    }
 
   }
 
   updateRecordCount () {
-    this.entityManager.getRepository(this.repository).count()
-      .then(response => this.count = response.count)
-      .catch(response => console.error(response));
+    if (this.resource) {
+      this.repository.count()
+        .then(response => this.count = response.count)
+        .catch(response => console.error(response));
+    }
+
   }
 
 }
