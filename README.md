@@ -1,2 +1,2 @@
 # aurelia-pagination
-Simpel aurelia pagination component.
+Simple aurelia pagination component.
