@@ -1,0 +1,13 @@
+<template>
+  <ul class="pagination" if.bind="pageCount >= 2">
+    <li class="${page == 1 ? 'disabled' : ''}" disabled.bind="page == 1">
+      <a href="#" click.delegate="loadPrevious()" t="Previous">Previous</a>
+    </li>
+    <li class="${page == index + 1 ? 'active' : ''}" repeat.for="index of pageCount">
+      <a href="#" click.delegate="load(index+1)">${index+1}</a>
+    </li>
+    <li class="${page == pageCount ? 'disabled' : ''}" disabled.bind="page == pageCount">
+      <a href="#" click.delegate="loadNext()" t="Next">Next</a>
+    </li>
+  </ul>
+</template>
