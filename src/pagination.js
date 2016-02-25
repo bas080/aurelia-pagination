@@ -6,7 +6,7 @@ import {EntityManager} from 'spoonx/aurelia-orm';
 @inject(EntityManager, Element)
 @customElement('pagination')
 export class Pagination {
-  @bindable page;
+  @bindable page = 1;
 
   @bindable limit = 20;
 
@@ -51,14 +51,14 @@ export class Pagination {
    * Load previous page.
    */
   loadPrevious (step = 1) {
-    this.load(this.page - step);
+    this.load(Number(this.page) - step);
   }
 
   /**
    * Load next page.
    */
   loadNext (step = 1) {
-    this.load(this.page + step);
+    this.load(Number(this.page) + step);
   }
 
   /**

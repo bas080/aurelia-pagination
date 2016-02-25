@@ -25,7 +25,9 @@ var Pagination = (function () {
   _createDecoratedClass(Pagination, [{
     key: 'page',
     decorators: [_aureliaTemplating.bindable],
-    initializer: null,
+    initializer: function initializer() {
+      return 1;
+    },
     enumerable: true
   }, {
     key: 'limit',
@@ -86,14 +88,14 @@ var Pagination = (function () {
     value: function loadPrevious() {
       var step = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
 
-      this.load(this.page - step);
+      this.load(Number(this.page) - step);
     }
   }, {
     key: 'loadNext',
     value: function loadNext() {
       var step = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
 
-      this.load(this.page + step);
+      this.load(Number(this.page) + step);
     }
   }, {
     key: 'load',
