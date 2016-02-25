@@ -14,6 +14,8 @@ export class Pagination {
 
   @bindable pagechange = null;
 
+  @bindable resource = null;
+
   /**
    * Calculate number of pages whenever 'count' or 'limit' is updated.
    *
@@ -39,7 +41,6 @@ export class Pagination {
    * Get resource, if exists initiate repository and update count.
    */
   attached () {
-    this.resource = this.element.getAttribute('resource');
     if (!this.resource) {
       return;
     }

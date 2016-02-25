@@ -54,6 +54,13 @@ System.register(['aurelia-dependency-injection', 'aurelia-binding', 'aurelia-tem
           },
           enumerable: true
         }, {
+          key: 'resource',
+          decorators: [bindable],
+          initializer: function initializer() {
+            return null;
+          },
+          enumerable: true
+        }, {
           key: 'pageCount',
           decorators: [computedFrom('count', 'limit')],
           get: function get() {
@@ -72,6 +79,8 @@ System.register(['aurelia-dependency-injection', 'aurelia-binding', 'aurelia-tem
 
           _defineDecoratedPropertyDescriptor(this, 'pagechange', _instanceInitializers);
 
+          _defineDecoratedPropertyDescriptor(this, 'resource', _instanceInitializers);
+
           this.entityManager = entityManager;
           this.element = element;
         }
@@ -79,7 +88,6 @@ System.register(['aurelia-dependency-injection', 'aurelia-binding', 'aurelia-tem
         _createDecoratedClass(Pagination, [{
           key: 'attached',
           value: function attached() {
-            this.resource = this.element.getAttribute('resource');
             if (!this.resource) {
               return;
             }
