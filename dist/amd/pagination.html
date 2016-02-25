@@ -1,5 +1,5 @@
 <template>
-  <ul class="pagination">
+  <ul class="pagination" if.bind="pageCount >= 2">
     <li class="${page == 1 ? 'disabled' : ''}" disabled.bind="page == 1">
       <a href="#" click.delegate="loadPrevious()" t="Previous"></a>
     </li>
