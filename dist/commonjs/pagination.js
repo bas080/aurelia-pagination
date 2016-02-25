@@ -90,6 +90,7 @@ var Pagination = (function () {
       }
       this.repository = this.entityManager.getRepository(this.resource);
       this.updateRecordCount();
+      this.load(this.page);
     }
   }, {
     key: 'loadPrevious',
