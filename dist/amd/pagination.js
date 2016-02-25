@@ -77,19 +77,23 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-t
     }, {
       key: 'loadPrevious',
       value: function loadPrevious() {
-        this.load(this.page - 1);
+        var step = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+
+        this.load(this.page - step);
       }
     }, {
       key: 'loadNext',
       value: function loadNext() {
-        this.load(this.page + 1);
+        var step = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+
+        this.load(this.page + step);
       }
     }, {
       key: 'load',
       value: function load(page) {
         var _this = this;
 
-        if (page === 0) {
+        if (page <= 0) {
           return;
         }
 

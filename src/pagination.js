@@ -50,15 +50,15 @@ export class Pagination {
   /**
    * Load previous page.
    */
-  loadPrevious () {
-    this.load(this.page - 1);
+  loadPrevious (step = 1) {
+    this.load(this.page - step);
   }
 
   /**
    * Load next page.
    */
-  loadNext () {
-    this.load(this.page + 1);
+  loadNext (step = 1) {
+    this.load(this.page + step);
   }
 
   /**
@@ -67,7 +67,7 @@ export class Pagination {
    * @param page
    */
   load (page) {
-    if (page === 0) {
+    if (page <= 0) {
       return;
     }
 
