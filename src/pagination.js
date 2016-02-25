@@ -1,5 +1,6 @@
-import {bindable, inject, computedFrom} from 'aurelia-framework';
-import {customElement} from 'aurelia-templating';
+import {inject} from 'aurelia-dependency-injection';
+import {computedFrom} from 'aurelia-binding';
+import {bindable, customElement} from 'aurelia-templating';
 import {EntityManager} from 'spoonx/aurelia-orm';
 
 @inject(EntityManager, Element)

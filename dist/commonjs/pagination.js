@@ -10,7 +10,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineDecoratedPropertyDescriptor(target, key, descriptors) { var _descriptor = descriptors[key]; if (!_descriptor) return; var descriptor = {}; for (var _key in _descriptor) descriptor[_key] = _descriptor[_key]; descriptor.value = descriptor.initializer ? descriptor.initializer.call(target) : undefined; Object.defineProperty(target, key, descriptor); }
 
-var _aureliaFramework = require('aurelia-framework');
+var _aureliaDependencyInjection = require('aurelia-dependency-injection');
+
+var _aureliaBinding = require('aurelia-binding');
 
 var _aureliaTemplating = require('aurelia-templating');
 
@@ -22,33 +24,33 @@ var Pagination = (function () {
 
   _createDecoratedClass(Pagination, [{
     key: 'page',
-    decorators: [_aureliaFramework.bindable],
+    decorators: [_aureliaTemplating.bindable],
     initializer: null,
     enumerable: true
   }, {
     key: 'limit',
-    decorators: [_aureliaFramework.bindable],
+    decorators: [_aureliaTemplating.bindable],
     initializer: function initializer() {
       return 20;
     },
     enumerable: true
   }, {
     key: 'count',
-    decorators: [_aureliaFramework.bindable],
+    decorators: [_aureliaTemplating.bindable],
     initializer: function initializer() {
       return 0;
     },
     enumerable: true
   }, {
     key: 'pagechange',
-    decorators: [_aureliaFramework.bindable],
+    decorators: [_aureliaTemplating.bindable],
     initializer: function initializer() {
       return null;
     },
     enumerable: true
   }, {
     key: 'pageCount',
-    decorators: [(0, _aureliaFramework.computedFrom)('count', 'limit')],
+    decorators: [(0, _aureliaBinding.computedFrom)('count', 'limit')],
     get: function get() {
       return Math.ceil(this.count / this.limit);
     }
@@ -129,7 +131,7 @@ var Pagination = (function () {
 
   var _Pagination = Pagination;
   Pagination = (0, _aureliaTemplating.customElement)('pagination')(Pagination) || Pagination;
-  Pagination = (0, _aureliaFramework.inject)(_spoonxAureliaOrm.EntityManager, Element)(Pagination) || Pagination;
+  Pagination = (0, _aureliaDependencyInjection.inject)(_spoonxAureliaOrm.EntityManager, Element)(Pagination) || Pagination;
   return Pagination;
 })();
 

@@ -14,6 +14,8 @@ System.config({
 
   map: {
     "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.1.1",
+    "aurelia/binding": "github:aurelia/binding@0.11.4",
+    "aurelia/dependency-injection": "github:aurelia/dependency-injection@0.12.1",
     "aurelia/templating": "github:aurelia/templating@0.17.5",
     "babel": "npm:babel-core@5.8.35",
     "babel-runtime": "npm:babel-runtime@5.8.35",
