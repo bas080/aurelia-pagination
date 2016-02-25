@@ -44,6 +44,13 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-t
       },
       enumerable: true
     }, {
+      key: 'resource',
+      decorators: [_aureliaTemplating.bindable],
+      initializer: function initializer() {
+        return null;
+      },
+      enumerable: true
+    }, {
       key: 'pageCount',
       decorators: [(0, _aureliaBinding.computedFrom)('count', 'limit')],
       get: function get() {
@@ -62,6 +69,8 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-t
 
       _defineDecoratedPropertyDescriptor(this, 'pagechange', _instanceInitializers);
 
+      _defineDecoratedPropertyDescriptor(this, 'resource', _instanceInitializers);
+
       this.entityManager = entityManager;
       this.element = element;
     }
@@ -69,7 +78,6 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-t
     _createDecoratedClass(Pagination, [{
       key: 'attached',
       value: function attached() {
-        this.resource = this.element.getAttribute('resource');
         if (!this.resource) {
           return;
         }
