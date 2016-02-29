@@ -93,6 +93,7 @@ System.register(['aurelia-dependency-injection', 'aurelia-binding', 'aurelia-tem
             }
             this.repository = this.entityManager.getRepository(this.resource);
             this.updateRecordCount();
+            this.load(this.page);
           }
         }, {
           key: 'loadPrevious',

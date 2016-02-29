@@ -83,6 +83,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-binding', 'aurelia-t
         }
         this.repository = this.entityManager.getRepository(this.resource);
         this.updateRecordCount();
+        this.load(this.page);
       }
     }, {
       key: 'loadPrevious',

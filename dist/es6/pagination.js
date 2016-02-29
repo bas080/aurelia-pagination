@@ -46,6 +46,7 @@ export class Pagination {
     }
     this.repository = this.entityManager.getRepository(this.resource);
     this.updateRecordCount();
+    this.load(this.page);
   }
 
   /**
