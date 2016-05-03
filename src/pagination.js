@@ -8,6 +8,9 @@ import {EntityManager} from 'spoonx/aurelia-orm';
 export class Pagination {
   @bindable page = 1;
 
+  /* the max amount of page numbers visible in the pagination */
+  @bindable max = 20;
+
   @bindable limit = 20;
 
   @bindable count = 0;
@@ -67,17 +70,20 @@ export class Pagination {
    * Load a page and call the pagechange function bind to the element if exists.
    *
    * @param page
+   * @returns {undefined}
    */
   load (page) {
-    if (page <= 0) {
-      return;
-    }
 
-    page = page || 1;
+    /* when the page is no longer valid default to first page */
+   if (!isValidPage(page))
+     page = 1;
 
-    if (this.pageCount && page > this.pageCount) {
+   /* make sure the page number stays within bounds */
+   page = pageToBorder(page);
+
+    /* when border has been reached do not perform the pageChange */
+    if (pageIsBorder(page))
       return;
-    }
 
     if (typeof this.pagechange === 'function') {
       this.pagechange({page:page})
@@ -88,7 +94,6 @@ export class Pagination {
     else {
       this.page = page;
     }
-
   }
 
   /**
@@ -104,4 +109,72 @@ export class Pagination {
     }
   }
 
+  /**
+   * returns a page representing a page number that is always within the
+   * available page numbers
+   * @param {number} page
+   * @returns {number}
+   */
+  private pageToBorder (page) {
+    /* reached the right limit */
+    if (page > this.count)
+      return this.count;
+
+    /* reached the left limit */
+    if (page < 1)
+      return 1;
+
+    /* has not reached a limit */
+    return page;
+  }
+
+  /**
+   * true when the page is a number and is within range
+   *
+   * @param {number} page
+   * @return {boolean}
+   */
+  private isValidPage (page) {
+    return (
+      (typeof page === 'number') &&
+      (page <= this.count) &&
+      (page > 0)
+    );
+  }
+
+  /**
+   * true when the page is a border page 
+   * @param {number} page
+   * @return {boolean}
+   */
+  private pageIsBorder (page) {
+    return (
+      (page === 0) &&
+      (page === this.count)
+    );
+  }
+
+  /**
+   * generates an array of the visible pages. It tries to center the current
+   * page (this.page).
+   *
+   * @param {number} page
+   * @returns {number[]}
+   */
+  visiblePages (page) {
+
+    let pages = [];
+
+    let length = Math.max(this.max, this.pageCount);
+
+    let start = page - Math.max(length / 2, this.max);
+
+    start = pageToBorder(start);
+
+    for (let i = 0; i < length) {
+      pages[i] = start + i;
+    }
+
+    return pages;
+  }
 }
